@@ -28,6 +28,12 @@ def authenticate_user(db: Session, email: str, password: str):
         return False
     return user
 
+def authenticate_demo_user(db: Session):
+    user = crud.get_user_by_email(db, email="bibliotek@demo.com")
+    if not user:
+        return False
+    return user
+
 def verify_password(plain_password: str, hashed_password: str):
     return pwd_context.verify(plain_password, hashed_password)
 
