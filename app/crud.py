@@ -12,3 +12,10 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 def get_user_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
+
+def update_user_password(db: Session, user: models.User, new_password: str):
+    hashed_password = get_password_hash(new_password)
+    user.hashed_password = hashed_password
+    db.commit()
+    db.refresh(user)
+    return user
